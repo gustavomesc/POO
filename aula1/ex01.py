@@ -1,3 +1,3 @@
-nome=input("qual seu nome?\n")
-print(f"{nome}")
+print("Gustavo")
+print("20241011110022")
 
