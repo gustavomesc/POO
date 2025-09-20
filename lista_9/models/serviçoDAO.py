@@ -1,6 +1,6 @@
 import json
-from models.cliente import Cliente
-class ClienteDAO:
+from models.serviço import Serviço
+class ServiçoDAO:
     __objetos = []
     @classmethod
     def inserir(cls, obj):
@@ -41,14 +41,14 @@ class ClienteDAO:
     def abrir(cls):
         cls.__objetos = []
         try:
-            with open("clientes.json", mode="r") as arquivo:
+            with open("serviços.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
                 for dic in list_dic:
-                    obj = Cliente.from_json(dic)
+                    obj = Serviço.from_json(dic)
                     cls.__objetos.append(obj)
         except FileNotFoundError:
             pass
     @classmethod
     def salvar(cls):
-        with open("clientes.json", mode="w") as arquivo:
-            json.dump(cls.__objetos, arquivo, default = Cliente.to_json)
+        with open("serviços.json", mode="w") as arquivo:
+            json.dump(cls.__objetos, arquivo, default = Serviço.to_json)

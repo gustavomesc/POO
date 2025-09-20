@@ -1,4 +1,5 @@
 from models.clienteDAO import Cliente,ClienteDAO
+from models.serviçoDAO import Serviço, ServiçoDAO
 class View:
         def cliente_listar():
             return ClienteDAO.listar()
@@ -11,3 +12,14 @@ class View:
         def cliente_excluir(id):
             cliente = Cliente(id, "", "", "")
             ClienteDAO.excluir(cliente)
+        def serviço_listar():
+            return ServiçoDAO.listar()
+        def serviço_inserir(descricao,valor):
+            servico = Serviço(0,descricao,valor)
+            ServiçoDAO.inserir(servico)
+        def serviço_atualizar(id,descricao,valor):
+            servico = Serviço(id,descricao,valor)
+            ClienteDAO.atualizar(servico)
+        def serviço_excluir(id):
+            servico = Serviço(id,"","",)
+            ClienteDAO.excluir(servico)
