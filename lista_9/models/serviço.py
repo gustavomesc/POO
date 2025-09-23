@@ -16,7 +16,7 @@ class Serviço:
     def set_descricao(self, descricao): 
         self.__descricao = descricao
     def set_valor(self, valor): 
-        self.__email = valor
+        self.__valor = valor
     def to_json(self):
         dict = {"id":self.get_id(),"descricao":self.get_descricao(),"valor":self.get_valor()}
         return dict

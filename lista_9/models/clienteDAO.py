@@ -48,6 +48,8 @@ class ClienteDAO:
                     cls.__objetos.append(obj)
         except FileNotFoundError:
             pass
+        except json.JSONDecodeError:
+            cls.__objetos = []
     @classmethod
     def salvar(cls):
         with open("clientes.json", mode="w") as arquivo:

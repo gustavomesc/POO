@@ -19,7 +19,7 @@ class View:
             ServiçoDAO.inserir(servico)
         def serviço_atualizar(id,descricao,valor):
             servico = Serviço(id,descricao,valor)
-            ClienteDAO.atualizar(servico)
+            ServiçoDAO.atualizar(servico)
         def serviço_excluir(id):
             servico = Serviço(id,"","",)
-            ClienteDAO.excluir(servico)
+            ServiçoDAO.excluir(servico)
