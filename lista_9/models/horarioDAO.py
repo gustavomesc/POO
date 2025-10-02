@@ -1,5 +1,5 @@
 import json
-from horario import Horario
+from models.horario import Horario
 
 class HorarioDAO:
     __objetos= []
