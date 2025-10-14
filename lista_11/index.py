@@ -7,6 +7,7 @@ from templates.login import LoginUI
 from templates.cadastro import AbrirContaUI
 from templates.perfilCliente import PerfilClienteUI
 from templates.perfilProfissional import PerfilProfissionalUI
+from templates.agendarServiço import AgendarServicoUI
 
 import streamlit as st
 
@@ -26,8 +27,9 @@ class IndexUI:
         if op == "Entrar no Sistema": LoginUI.main()
         if op == "Abrir Conta": AbrirContaUI.main()
     def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados,agendar Serviço"])
         if op == "Meus Dados": PerfilClienteUI.main()
+        if op == "agendar Serviço": AgendarServicoUI.main()
     def menu_profissional():
         op = st.sidebar.selectbox("Menu", ["Meus Dados"])
         if op == "Meus Dados": PerfilProfissionalUI.main()
@@ -36,12 +38,14 @@ class IndexUI:
             IndexUI.menu_visitante()
         else:
             admin = st.session_state["usuario_nome"] == "admin"
-            profissional = View.profissional_listar_id(st.session_state["usuario_id"]) != None
             st.sidebar.write("Bem-vindo(a), " +
             st.session_state["usuario_nome"])
-            if admin: IndexUI.menu_admin()
-            elif profissional: IndexUI.menu_profissional()
-            else: IndexUI.menu_cliente()
+            if admin: 
+                IndexUI.menu_admin()
+            elif st.session_state["categoria_usuario"] == "profissional": 
+                IndexUI.menu_profissional()
+            else: 
+                IndexUI.menu_cliente()
             IndexUI.sair_do_sistema()
     def main():
         View.cliente_criar_admin()

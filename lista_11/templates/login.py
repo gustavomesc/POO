@@ -17,6 +17,7 @@ class LoginUI:
             else:
                 st.session_state["usuario_id"] = c["id"]
                 st.session_state["usuario_nome"] = c["nome"]
+                st.session_state["categoria_usuario"] = "profissional"
                 st.rerun()
     def login_cliente():
         email = st.text_input("Informe o e-mail", key="login_email_cliente")
@@ -28,4 +29,5 @@ class LoginUI:
             else:
                 st.session_state["usuario_id"] = c["id"]
                 st.session_state["usuario_nome"] = c["nome"]
+                st.session_state["categoria_usuario"] = "cliente"
                 st.rerun()
