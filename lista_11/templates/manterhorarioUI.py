@@ -28,9 +28,9 @@ class ManterHorarioUI:
                     servico = servico.get_descricao()
                 if profissional != None: 
                     profissional = profissional.get_nome()
-            dic.append({"id" : obj.get_id(), "data" : obj.get_data(),
-            "confirmado" : obj.get_confirmado(), "cliente" : cliente,
-            "serviço" : servico,"profissional":profissional})
+                dic.append({"id" : obj.get_id(), "data" : obj.get_data(),
+                "confirmado" : obj.get_confirmado(), "cliente" : cliente,
+                "serviço" : servico,"profissional":profissional})
             df= pd.DataFrame(dic)
             st.dataframe(df)
     def inserir():

@@ -14,7 +14,7 @@ class AgendarServicoUI:
                 st.write("Nenhum horário disponível")
             else:
                 horario= st.selectbox("Informe o horário", horarios)
-                servicos= View.servico_listar()
+                servicos= View.serviço_listar()
                 servico= st.selectbox("Informe o serviço", servicos)
                 if st.button("Agendar"):
                     View.horario_atualizar(horario.get_id(),horario.get_data(), False,st.session_state["usuario_id"],servico.get_id(), profissional.get_id())

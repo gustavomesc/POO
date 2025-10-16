@@ -98,9 +98,10 @@ class View:
         def abrir_agenda(id_profissional, data, horario_inicial):
             horarios = HorarioDAO.listar()
             dataHorario = datetime.strptime(data+" "+horario_inicial, "%d/%m/%Y %H:%M")
-            for h in horarios:
-                if h.get_data() == dataHorario:
-                    pass
-                else:
-                    HorarioDAO.inserir(Horario(0, dataHorario))
+            horario_marcado = Horario(0, dataHorario)
+            horario_marcado.set_id_profissional(id_profissional)
+            horario_marcado.set_confirmado(False)
+            horario_marcado.set_id_cliente(None)
+            horario_marcado.set_id_servico(None)   
+            HorarioDAO.inserir(horario_marcado)
         
