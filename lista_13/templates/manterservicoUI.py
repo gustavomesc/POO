@@ -42,7 +42,7 @@ class ManterservicoUI():
             if st.button("Atualizar"):
                 try:
                     id = op.get_id()
-                    View.servico_atualizar(id, descricao, float(valor))
+                    View.serviço_atualizar(id, descricao, float(valor))
                     st.success("Serviço atualizado com sucesso")
                 except ValueError as erro:
                     st.error(erro)
@@ -57,7 +57,7 @@ class ManterservicoUI():
             if st.button("Excluir"):
                 try:
                     id = op.get_id()
-                    View.servico_excluir(id)
+                    View.serviço_excluir(id)
                     st.success("Serviço excluído com sucesso")
                 except ValueError as erro:
                     st.error(erro)

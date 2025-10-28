@@ -24,13 +24,33 @@ class View:
             list.sort(key=lambda x: x.get_nome().lower())
             return list
         def cliente_inserir(nome, email, fone,senha):
+            emails = []
+            for obj in View.cliente_listar():
+                emails.append(obj.get_email())
+            for obj in View.profissional_listar():
+                emails.append(obj.get_email())
+            print(emails)
+            for e in emails:
+                if email == e:
+                    raise ValueError("Email já cadastrado em outro usuario")
             cliente = Cliente(0, nome, email, fone,senha)
             ClienteDAO.inserir(cliente)
         def cliente_atualizar(id, nome, email, fone,senha):
+            emails = []
+            for obj in View.cliente_listar():
+                emails.append(obj.get_email())
+            for obj in View.profissional_listar():
+                emails.append(obj.get_email())
+            for e in emails:
+                if email == e:
+                    raise ValueError("Email já cadastrado em outro usuario")
             cliente = Cliente(id, nome, email, fone,senha)
             ClienteDAO.atualizar(cliente)
         def cliente_excluir(id):
-            cliente = Cliente(id, "", "", "","")
+            for obj in View.horario_listar():
+                if obj.get_id_cliente() == id:
+                    raise ValueError("Cliente possui agendamentos: não é possível excluir")
+            cliente = Cliente(id, None, None,None,None)
             ClienteDAO.excluir(cliente)
         def cliente_listar_id(id):
             return ClienteDAO.listar_id(id)
@@ -43,7 +63,7 @@ class View:
             servico = Serviço(0,descricao,valor)
             ServiçoDAO.inserir(servico)
         def serviço_atualizar(id,descricao,valor):
-            for obj in View.servico_listar():
+            for obj in View.serviço_listar():
                 if obj.get_id() != id and obj.get_descricao() == descricao:
                     raise ValueError("Descriçao já cadastrada em outro serviço")
             servico = Serviço(id,descricao,valor)
@@ -52,12 +72,20 @@ class View:
             for obj in View.horario_listar():
                 if obj.get_id_servico() == id:
                     raise ValueError("Serviço já agendado: não é possível excluir")
-            servico = Serviço(id,"","",)
+            servico = Serviço(id,None,1)
             ServiçoDAO.excluir(servico)
         def servico_listar_id(id):
             return ServiçoDAO.listar_id(id)
 
         def horario_inserir(data, confirmado, id_cliente, id_servico,id_profissional):
+            datas = []
+            for obj in View.horario_listar():
+                datas.append(obj.get_data())
+            for d in datas:
+                print(d)
+                print(data)
+                if data == d:
+                    raise ValueError("Horario já cadastrado")
             c = Horario(0, data)
             c.set_confirmado(confirmado)
             c.set_id_cliente(id_cliente)
@@ -69,6 +97,13 @@ class View:
             list.sort(key=lambda x: x.get_data())
             return list
         def horario_atualizar(id, data, confirmado, id_cliente, id_servico,id_profissional):
+            datas = []
+            for obj in View.horario_listar():
+                datas.append(obj.get_data())
+            for d in datas:
+                if data == d:
+                    raise ValueError("Horario já cadastrado")
+        def agendar_servico(id, data, confirmado, id_cliente, id_servico,id_profissional):
             c= Horario(id, data)
             c.set_confirmado(confirmado)
             c.set_id_cliente(id_cliente)
@@ -76,7 +111,11 @@ class View:
             c.set_id_profissional(id_profissional)
             HorarioDAO.atualizar(c)
         def horario_excluir(id):
-            c= Horario(id, None)
+            for h in View.horario_listar():
+                if h.get_id() == id:
+                    if h.get_id_cliente() != None:
+                        raise ValueError("Horario já agendado: não é possível excluir")
+            c= Horario(id, datetime.strptime("01/01/2025 00:00","%d/%m/%Y %H:%M"))
             return HorarioDAO.excluir(c)
         def horario_agendar_horario(id_profissional):
                 r= []
@@ -96,23 +135,37 @@ class View:
             list.sort(key=lambda x: x.get_nome().lower())
             return list
         def profissional_inserir(nome,especialidade,conselho, email,senha):
+            emails = []
+            for obj in View.cliente_listar():
+                emails.append(obj.get_email())
+            for obj in View.profissional_listar():
+                emails.append(obj.get_email())
+            for e in emails:
+                if email == e:
+                    raise ValueError("Email já cadastrado em outro usuario")
             profissional = Profissional(0, nome,especialidade,conselho, email,senha)
             ProfissionalDAO.inserir(profissional)
         def profissional_atualizar(id, nome,especialide,conselho, email,senha):
+            emails = []
+            for obj in View.cliente_listar():
+                emails.append(obj.get_email())
+            for obj in View.profissional_listar():
+                emails.append(obj.get_email())
+            for e in emails:
+                if email == e:
+                    raise ValueError("Email já cadastrado em outro usuario")
             profissional = Profissional(id, nome,especialide,conselho ,email,senha)
             ProfissionalDAO.atualizar(profissional)
         def profissional_excluir(id):
-            profissional = Profissional(id, "", "", "","")
+            for obj in View.horario_listar():
+                if obj.get_id_profissional() == id:
+                    raise ValueError("Profissional possui agendamentos: não é possível excluir")
+            profissional = Profissional(id, None, None,None,None,None)
             ProfissionalDAO.excluir(profissional)
         def profissional_listar_id(id):
             return ProfissionalDAO.listar_id(id)
         def abrir_agenda(id_profissional, data, horario_inicial):
             horarios = HorarioDAO.listar()
-            dataHorario = datetime.strptime(data+" "+horario_inicial, "%d/%m/%Y %H:%M")
-            horario_marcado = Horario(0, dataHorario)
-            horario_marcado.set_id_profissional(id_profissional)
-            horario_marcado.set_confirmado(False)
-            horario_marcado.set_id_cliente(None)
-            horario_marcado.set_id_servico(None)   
-            HorarioDAO.inserir(horario_marcado)
+            dataHorario = datetime.strptime(data+" "+horario_inicial, "%d/%m/%Y %H:%M")  
+            View.horario_inserir(dataHorario, False, None, None, id_profissional)
         
