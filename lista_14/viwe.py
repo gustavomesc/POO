@@ -164,6 +164,11 @@ class View:
             ProfissionalDAO.excluir(profissional)
         def profissional_listar_id(id):
             return ProfissionalDAO.listar_id(id)
+        def avaliar_profissional(profissional,nota):
+            profissional.adicionar_nota(nota)
+        def avaliacoes_profissional(profissional):
+            return profissional.get_notas()
+
         def abrir_agenda(id_profissional, data, horario_inicial):
             horarios = HorarioDAO.listar()
             dataHorario = datetime.strptime(data+" "+horario_inicial, "%d/%m/%Y %H:%M")  

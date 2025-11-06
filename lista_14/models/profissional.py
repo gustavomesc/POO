@@ -1,4 +1,5 @@
 class Profissional:
+    __notas = []
     def __init__(self, id, nome, especialidade, conselho,email,senha):
         self.set_id(id)
         self.set_nome(nome)
@@ -35,6 +36,12 @@ class Profissional:
         self.__especialidade = especialidade
     def set_conselho(self, conselho): 
         self.__conselho = conselho
+    def adicionar_nota(self,nota):
+        if nota not in [1,2,3,4,5,6,7,8,9,10]: raise ValueError
+        self.__notas.append(nota)
+    def get_notas(self):
+        return self.__notas
+
     def to_json(self):
         dict = {"id":self.get_id(),"nome":self.get_nome(),"conselho":self.get_conselho(),"especialidade":self.get_especialidade(),"email":self.get_email(),"senha":self.get_senha()}
         return dict
